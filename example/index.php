@@ -147,6 +147,7 @@ $app->get('/gateways/{name}/purchase', function($name) use ($app) {
     $params = $app['session']->get($sessionVar.'.purchase', array());
     $params['returnUrl'] = str_replace('/purchase', '/completePurchase', $app['request']->getUri());
     $params['cancelUrl'] = $app['request']->getUri();
+    $params['transactionId'] = date('Y-m-d-H-i-s');
     $card = new Omnipay\Common\CreditCard($app['session']->get($sessionVar.'.card'));
 
     return $app['twig']->render('request.twig', array(
