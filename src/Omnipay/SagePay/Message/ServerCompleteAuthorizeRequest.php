@@ -18,6 +18,20 @@ use Omnipay\Common\Exception\InvalidResponseException;
  */
 class ServerCompleteAuthorizeRequest extends AbstractRequest
 {
+    /**
+     * This retrieves the transaction id from the raw request so that you can
+     * retrieve the full transactionReference from your stored
+     * and setTransactionReference() into this request before calling getData()
+     * since getData will validate the signature of this request and needs
+     * the VPSTxId, VendorTxCode and SecurityKey that were stashed in the
+     * transactionReference!
+     * @return string
+     */
+    public function getRequestTransactionId()
+    {
+        return $this->httpRequest->request->get('VendorTxCode');
+    }
+
     public function getData()
     {
         $this->validate('transactionId', 'transactionReference');
