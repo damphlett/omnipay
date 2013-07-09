@@ -36,6 +36,15 @@ class ServerCompleteAuthorizeResponse extends Response
     }
 
     /**
+     * SagePay's ID to uniquely identify the Transaction on their system.
+     * @return string
+     */
+    public function getVPSTxId()
+    {
+        return (isset($this->data['VPSTxId'])) ? $this->data['VPSTxId'] : null;
+    }
+
+    /**
      * SagePay unique Authorisation Code for successfully authorised transactions
      * aka VPSAuthCode.
      * Only present if the transaction was successfully authorised (Status OK)
