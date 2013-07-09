@@ -46,19 +46,18 @@ class Response extends AbstractResponse implements RedirectResponseInterface
      * custom format: VendorTxCode;VPSTxId;TxAuthNo;SecurityKey
      *
      * We have opted to return this reference as JSON, as the keys are much more explicit.
+     * 
      */
     public function getTransactionReference()
     {
-        if (isset($this->data['SecurityKey']) && isset($this->data['TxAuthNo']) && isset($this->data['VPSTxId'])) {
-            return json_encode(
-                array(
-                    'SecurityKey' => $this->data['SecurityKey'],
-                    'TxAuthNo' => $this->data['TxAuthNo'],
-                    'VPSTxId' => $this->data['VPSTxId'],
-                    'VendorTxCode' => $this->getRequest()->getTransactionId(),
-                )
-            );
-        }
+        return json_encode(
+            array(
+                'SecurityKey' => isset($this->data['SecurityKey']) ? $this->data['SecurityKey'] : null,
+                'TxAuthNo' => isset($this->data['TxAuthNo']) ? $this->data['TxAuthNo'] : null,
+                'VPSTxId' => isset($this->data['VPSTxId']) ? $this->data['VPSTxId'] : null,
+                'VendorTxCode' => $this->getRequest()->getTransactionId(), // already defaults null if not set
+            )
+        );
     }
 
     public function getMessage()
