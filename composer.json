@@ -1,7 +1,7 @@
 {
     "name": "davelopware/omnipay",
     "type": "library",
-    "description": "A framework agnostic, multi-gateway payment processing library",
+    "description": "A version of adrianmacneil/omnipay (omnipay/omnipay on packagist) which is included in the WordPress OmniPay Payment Gateway Plugin by Davelopware",
     "keywords": [
         "2checkout",
         "2co",
@@ -46,6 +46,10 @@
         {
             "name": "Adrian Macneil",
             "email": "adrian@adrianmacneil.com"
+        },
+        {
+            "name": "Dave Amphlett (Davelopware Ltd)",
+            "email": "dave@davelopware.com"
         }
     ],
     "autoload": {
