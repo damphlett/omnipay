@@ -3,11 +3,7 @@
 /*
  * This file is part of the Omnipay package.
  *
-<<<<<<< HEAD
- * (c) Adrian Macneil <adrian@adrianmacneil.com>
-=======
  * (c) Dave Amphlett <dave@davelopware.com>
->>>>>>> dev_to_core
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
