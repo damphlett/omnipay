@@ -35,6 +35,12 @@ class ServerCompleteAuthorizeResponse extends Response
         }
     }
 
+    public function getTransactionId()
+    {
+        return (isset($this->data['VendorTxCode'])) ? $this->data['VendorTxCode'] : null;
+    }
+
+    
     /**
      * SagePay's ID to uniquely identify the Transaction on their system.
      * @return string
@@ -42,6 +48,22 @@ class ServerCompleteAuthorizeResponse extends Response
     public function getVPSTxId()
     {
         return (isset($this->data['VPSTxId'])) ? $this->data['VPSTxId'] : null;
+    }
+
+    /**
+     * OK = Process executed without error
+     * MALFORMED = Input message was missing fields or badly formatted - should
+     *    only really occur during development!
+     * INVALID = Transaction was not registered because although the POST format
+     *    was valid, some information supplied was invalid. eg. incorrect
+     *    vendor name or currency.
+     * ERROR = A problem occurred at Sage Pay which prevented transaction
+     *    registration
+     * @return string
+     */
+    public function getStatus()
+    {
+        return (isset($this->data['Status'])) ? $this->data['Status'] : null;
     }
 
     /**
