@@ -44,4 +44,14 @@ class ServerGateway extends DirectGateway
     {
         return $this->completeAuthorize($parameters);
     }
+    
+    public function createCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\SagePay\Message\ServerCreateCardRequest', $parameters);
+    }
+
+    public function completeCreateCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\SagePay\Message\ServerCreateCardRequest', $parameters);
+    }
 }
