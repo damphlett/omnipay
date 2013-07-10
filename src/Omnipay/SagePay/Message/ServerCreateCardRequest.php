@@ -26,11 +26,18 @@ class ServerCreateCardRequest extends ServerPurchaseRequest
         $data['VendorTxCode'] = $this->getTransactionId();
         $data['Currency'] = $this->getCurrency();
         $data['NotificationURL'] = $this->getReturnUrl();
-        $data['Profile'] = $this->getProfile();
+        if (isset($this->getProfile())) {
+            $data['Profile'] = $this->getProfile();
+        }
 
         return $data;
     }
 
+    public function getProfile()
+    {
+        return $this->getParameter('currency');
+    }
+    
     public function getService()
     {
         return 'token';
