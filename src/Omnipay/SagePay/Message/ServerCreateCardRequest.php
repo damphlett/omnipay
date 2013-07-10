@@ -29,8 +29,8 @@ class ServerCreateCardRequest extends ServerPurchaseRequest
         $profile = $this->getProfile();
         if (isset($profile)) {
             $data['Profile'] = $profile;
-        } else {
-            $data['Profile'] = 'NORMAL';
+//        } else {
+//            $data['Profile'] = 'NORMAL';
         }
 
         return $data;
@@ -38,7 +38,12 @@ class ServerCreateCardRequest extends ServerPurchaseRequest
 
     public function getProfile()
     {
-        return $this->getParameter('currency');
+        return $this->getParameter('profile');
+    }
+    
+    public function setProfile($profile)
+    {
+        return $this->setParameter('profile', $profile);
     }
     
     public function getService()
