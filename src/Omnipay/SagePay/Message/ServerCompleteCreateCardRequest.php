@@ -39,7 +39,7 @@ class ServerCompleteCreateCardRequest extends AbstractRequest
      */
     public function getCardReference()
     {
-        return isset($this->data['Token']) ? $this->data['Token'] : null;
+        return $this->httpRequest->request->get('Token');
     }
 
     /**
@@ -48,7 +48,7 @@ class ServerCompleteCreateCardRequest extends AbstractRequest
      */
     public function getCardType()
     {
-        return isset($this->data['CardType']) ? $this->data['CardType'] : null;
+        return $this->httpRequest->request->get('CardType');
     }
 
     /**
@@ -58,7 +58,7 @@ class ServerCompleteCreateCardRequest extends AbstractRequest
      */
     public function getLast4Digits()
     {
-        return isset($this->data['Last4Digits']) ? $this->data['Last4Digits'] : null;
+        return $this->httpRequest->request->get('Last4Digits');
     }
 
     /**
@@ -67,7 +67,7 @@ class ServerCompleteCreateCardRequest extends AbstractRequest
      */
     public function getExpiryDate()
     {
-        return isset($this->data['ExpiryDate']) ? $this->data['ExpiryDate'] : null;
+        return $this->httpRequest->request->get('ExpiryDate');
     }
 
     public function getData()
@@ -81,14 +81,13 @@ class ServerCompleteCreateCardRequest extends AbstractRequest
             $reference['VPSTxId'].
             $reference['VendorTxCode'].
             $this->httpRequest->request->get('Status').
-            $this->httpRequest->request->get('TxAuthNo').
             $this->getVendor().
             $this->httpRequest->request->get('Token').
             $reference['SecurityKey']
         );
 
         if (strtolower($this->httpRequest->request->get('VPSSignature')) !== $signature) {
-            throw new InvalidResponseException;
+            throw new InvalidResponseException("Signature Mismatch");
         }
 
         return $this->httpRequest->request->all();
