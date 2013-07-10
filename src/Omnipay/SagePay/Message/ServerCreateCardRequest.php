@@ -31,6 +31,11 @@ class ServerCreateCardRequest extends ServerPurchaseRequest
         return $data;
     }
 
+    public function getProfile()
+    {
+        return $this->getParameter('currency');
+    }
+    
     public function getService()
     {
         return 'token';
