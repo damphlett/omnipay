@@ -78,8 +78,8 @@ class ServerCompleteCreateCardRequest extends AbstractRequest
 
         // validate VPSSignature
         $signature = md5(
-            $reference['VPSTxId'].
-            $reference['VendorTxCode'].
+            $this->httpRequest->request->get('VPSTxId').
+            $this->httpRequest->request->get('VendorTxCode').
             $this->httpRequest->request->get('Status').
             $this->getVendor().
             $this->httpRequest->request->get('Token').
@@ -87,7 +87,9 @@ class ServerCompleteCreateCardRequest extends AbstractRequest
         );
 
         if (strtolower($this->httpRequest->request->get('VPSSignature')) !== $signature) {
-            throw new InvalidResponseException("Signature Mismatch");
+            throw new InvalidResponseException(
+                    "Signature Mismatch\r\n".
+                    "#request:[".print_r($this->httpRequest->request, true)."]\r\n");
         }
 
         return $this->httpRequest->request->all();
