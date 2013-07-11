@@ -89,7 +89,9 @@ class ServerCompleteCreateCardRequest extends AbstractRequest
         if (strtolower($this->httpRequest->request->get('VPSSignature')) !== $signature) {
             throw new InvalidResponseException(
                     "Signature Mismatch\r\n".
-                    "#request:[".print_r($this->httpRequest->request, true)."]\r\n");
+                    //"#ours:[{$signature}]\r\n".
+                    //"#theirs:[".strtolower($this->httpRequest->request->get('VPSSignature'))."]\r\n".
+                    "Request:[".print_r($this->httpRequest->request, true)."]\r\n");
         }
 
         return $this->httpRequest->request->all();

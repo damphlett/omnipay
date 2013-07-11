@@ -98,7 +98,8 @@ class ServerCompleteCreateCardResponse extends Response
      */
     public function confirm($nextUrl)
     {
-        exit("Status=OK\r\nRedirectUrl=".$nextUrl);
+        $responseMsg = "Status=OK\r\nStatusDetail=All Good\r\nRedirectURL=".$nextUrl;
+        exit($responseMsg);
     }
 
 }
