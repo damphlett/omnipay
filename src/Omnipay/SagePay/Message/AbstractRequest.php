@@ -16,6 +16,8 @@ namespace Omnipay\SagePay\Message;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
+    public static $debugExceptions = false;
+    
     protected $liveEndpoint = 'https://live.sagepay.com/gateway/service';
     protected $testEndpoint = 'https://test.sagepay.com/gateway/service';
     protected $simulatorEndpoint = 'https://test.sagepay.com/Simulator';
@@ -84,6 +86,51 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         }
 
         return $this->liveEndpoint."/$service.vsp";
+    }
+
+    protected function checkSignature($fields, $throwExceptionOnFail = true)
+    {
+        $transactionReference = $this->getTransactionReference();
+        
+        $toHash = "";
+        $debugData = array();
+        foreach ($fields as $fieldNameDetails) {
+            $fieldNameParts = explode('.', $fieldNameDetails, 2);
+
+            $fieldSource = (count($fieldNameParts) > 1) ? $fieldNameParts[0] : 'request';
+            $fieldName = (count($fieldNameParts) > 1) ? $fieldNameParts[1] : $fieldNameDetails;
+
+            if ($fieldSource === 'request') {
+                $fieldValue .= $this->httpRequest->request->get($fieldName);
+            } else if ($fieldSource === 'tref') {
+                $fieldValue .= $reference[$fieldName];
+            } else if ($fieldSource === 'this') {
+                $fieldValue .= $this->{$fieldName}();
+            }
+            
+            $debugData[$fieldName] = $fieldValue;
+            $toHash .= $fieldValue;
+        }
+
+        // validate VPSSignature
+        $ourSig = md5($toHash);
+        $theirSig = strtolower($this->httpRequest->request->get('VPSSignature'));
+
+        if (($ourSig !== $theirSig) && $throwExceptionOnFail) {
+            if (self::$debugExceptions) {
+                throw new InvalidResponseException(
+                        "Signature Mismatch\r\n".
+                        "#ours:[{$ourSig}]\r\n".
+                        "#theirs:[{$theirSig}]\r\n".
+                        "#ourSigData:[{$debugData[$fieldName]}]\r\n".
+                        "Request:[".print_r($this->httpRequest->request, true)."]\r\n"
+                );
+            } else {
+                throw new InvalidResponseException("Signature Mismatch");
+            }
+        }
+        
+        return ($ourSig === $theirSig);
     }
 
     protected function createResponse($data)
