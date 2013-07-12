@@ -38,31 +38,27 @@ class ServerCompleteAuthorizeRequest extends AbstractRequest
 
         $reference = json_decode($this->getTransactionReference(), true);
 
-        // validate VPSSignature
-        $signature = md5(
-            $reference['VPSTxId'].
-            $reference['VendorTxCode'].
-            $this->httpRequest->request->get('Status').
-            $this->httpRequest->request->get('TxAuthNo').
-            $this->getVendor().
-            $this->httpRequest->request->get('AVSCV2').
-            $reference['SecurityKey'].
-            $this->httpRequest->request->get('AddressResult').
-            $this->httpRequest->request->get('PostCodeResult').
-            $this->httpRequest->request->get('CV2Result').
-            $this->httpRequest->request->get('GiftAid').
-            $this->httpRequest->request->get('3DSecureStatus').
-            $this->httpRequest->request->get('CAVV').
-            $this->httpRequest->request->get('AddressStatus').
-            $this->httpRequest->request->get('PayerStatus').
-            $this->httpRequest->request->get('CardType').
-            $this->httpRequest->request->get('Last4Digits')
-        );
-
-        if (strtolower($this->httpRequest->request->get('VPSSignature')) !== $signature) {
-            throw new InvalidResponseException;
-        }
-
+        $this->checkSignature(array(
+            'VPSTxId',
+            'VendorTxCode',
+            'Status',
+            'TxAuthNo',
+            'this.getVendor',
+            'AVSCV2',
+            'tref.SecurityKey',
+            'AddressResult',
+            'PostCodeResult',
+            'CV2Result',
+            'GiftAid',
+            '3DSecureStatus',
+            'CAVV',
+            'AddressStatus',
+            'PayerStatus',
+            'CardType',
+            'Last4Digits',
+        ));
+ 
+        // we only get here if we passed the signature check
         return $this->httpRequest->request->all();
     }
 
