@@ -83,7 +83,7 @@ class ServerCompleteAuthorizeResponse extends Response
      * DATA NOT CHECKED
      * @return string
      */
-    public function getAVSCV2() 
+    public function getAVSCV2()
     {
         return (isset($this->data['AVSCV2'])) ? $this->data['AVSCV2'] : null;
     }
@@ -92,7 +92,7 @@ class ServerCompleteAuthorizeResponse extends Response
      * NOTPROVIDED, NOTCHECKED, MATCHED, NATMATCHED
      * @return string
      */
-    public function getAddressResult() 
+    public function getAddressResult()
     {
         return (isset($this->data['AddressResult'])) ? $this->data['AddressResult'] : null;
     }
@@ -101,7 +101,7 @@ class ServerCompleteAuthorizeResponse extends Response
      * NOTPROVIDED, NOTCHECKED, MATCHED, NATMATCHED
      * @return string
      */
-    public function getPostCodeResult() 
+    public function getPostCodeResult()
     {
         return (isset($this->data['PostCodeResult'])) ? $this->data['PostCodeResult'] : null;
     }
@@ -110,7 +110,7 @@ class ServerCompleteAuthorizeResponse extends Response
      * NOTPROVIDED, NOTCHECKED, MATCHED, NATMATCHED
      * @return string
      */
-    public function getCV2Result() 
+    public function getCV2Result()
     {
         return (isset($this->data['CV2Result'])) ? $this->data['CV2Result'] : null;
     }
@@ -120,7 +120,7 @@ class ServerCompleteAuthorizeResponse extends Response
      * 1 = The user checked teh Gift Aid box on the payment page
      * @return string
      */
-    public function getGitAid() 
+    public function getGitAid()
     {
         return (isset($this->data['GiftAid'])) ? $this->data['GiftAid'] : null;
     }
@@ -138,7 +138,7 @@ class ServerCompleteAuthorizeResponse extends Response
      *    unavailability in one of the parties involved in the check.
      * @return string
      */
-    public function get3DSecureStatus() 
+    public function get3DSecureStatus()
     {
         return (isset($this->data['3DSecureStatus'])) ? $this->data['3DSecureStatus'] : null;
     }
@@ -147,7 +147,7 @@ class ServerCompleteAuthorizeResponse extends Response
      * The encoded result code from the 3D Secure checks (CAVV or UCAF)
      * @return string
      */
-    public function getCAVV() 
+    public function getCAVV()
     {
         return (isset($this->data['CAVV'])) ? $this->data['CAVV'] : null;
     }
@@ -159,7 +159,7 @@ class ServerCompleteAuthorizeResponse extends Response
      * NONE, CONFIRMED, UNCONFIRMED
      * @return string
      */
-    public function getAddressStatus() 
+    public function getAddressStatus()
     {
         return (isset($this->data['AddressStatus'])) ? $this->data['AddressStatus'] : null;
     }
@@ -169,7 +169,7 @@ class ServerCompleteAuthorizeResponse extends Response
      * VERIFIED, UNVERIFIED
      * @return string
      */
-    public function getPayerStatus() 
+    public function getPayerStatus()
     {
         return (isset($this->data['PayerStatus'])) ? $this->data['PayerStatus'] : null;
     }
@@ -188,7 +188,7 @@ class ServerCompleteAuthorizeResponse extends Response
      * PayPal transactions have 0000
      * @return string
      */
-    public function getLast4Digits() 
+    public function getLast4Digits()
     {
         return (isset($this->data['Last4Digits'])) ? $this->data['Last4Digits'] : null;
     }

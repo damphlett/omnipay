@@ -32,7 +32,7 @@ class DirectAuthorizeRequest extends AbstractRequest
         $data['Apply3DSecure'] = 0; // use account setting
 
         $cardReference = $this->getCardReference();
-        if ( ! empty($cardReference)) {
+        if (! empty($cardReference)) {
             $data['Token'] = $cardReference;
             $data['StoreToken'] = 1; // always store token - TODO - seperate accessor to control this?
         }

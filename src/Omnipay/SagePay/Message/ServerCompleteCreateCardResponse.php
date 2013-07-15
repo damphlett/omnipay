@@ -64,7 +64,7 @@ class ServerCompleteCreateCardResponse extends Response
      * PayPal transactions have 0000
      * @return string
      */
-    public function getLast4Digits() 
+    public function getLast4Digits()
     {
         return (isset($this->data['Last4Digits'])) ? $this->data['Last4Digits'] : null;
     }
@@ -73,7 +73,7 @@ class ServerCompleteCreateCardResponse extends Response
      * The Expiy date (required for ALL cards) in MMYY format
      * @return string
      */
-    public function getExpiryDate() 
+    public function getExpiryDate()
     {
         return (isset($this->data['ExpiryDate'])) ? $this->data['ExpiryDate'] : null;
     }
@@ -101,5 +101,4 @@ class ServerCompleteCreateCardResponse extends Response
         $responseMsg = "Status=OK\r\nStatusDetail=All Good\r\nRedirectURL=".$nextUrl;
         exit($responseMsg);
     }
-
 }
