@@ -66,8 +66,12 @@ class DirectAuthorizeRequest extends AbstractRequest
     public function getData()
     {
         $data = $this->getBaseAuthorizeData();
-        $this->getCard()->validate();
+        if (isset($data['Token'])) {
+            return $data;
+        }
 
+        $this->getCard()->validate();
+        
         $data['CardHolder'] = $this->getCard()->getName();
         $data['CardNumber'] = $this->getCard()->getNumber();
         $data['CV2'] = $this->getCard()->getCvv();
