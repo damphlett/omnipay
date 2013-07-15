@@ -90,7 +90,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     protected function checkSignature($fields, $throwExceptionOnFail = true)
     {
-        $transactionReference = $this->getTransactionReference();
+        $transactionReference = json_decode($this->getTransactionReference(), true);
         
         $toHash = "";
         $debugData = array();
@@ -101,11 +101,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             $fieldName = (count($fieldNameParts) > 1) ? $fieldNameParts[1] : $fieldNameDetails;
 
             if ($fieldSource === 'request') {
-                $fieldValue .= $this->httpRequest->request->get($fieldName);
+                $fieldValue = $this->httpRequest->request->get($fieldName);
             } else if ($fieldSource === 'tref') {
-                $fieldValue .= $reference[$fieldName];
+                $fieldValue = $transactionReference[$fieldName];
             } else if ($fieldSource === 'this') {
-                $fieldValue .= $this->{$fieldName}();
+                $fieldValue = $this->{$fieldName}();
             }
             
             $debugData[$fieldName] = $fieldValue;
@@ -118,7 +118,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
         if (($ourSig !== $theirSig) && $throwExceptionOnFail) {
             if (self::$debugExceptions) {
-                throw new InvalidResponseException(
+                throw new \Omnipay\Common\Exception\InvalidResponseExceptionInvalidResponseException(
                         "Signature Mismatch\r\n".
                         "#ours:[{$ourSig}]\r\n".
                         "#theirs:[{$theirSig}]\r\n".
@@ -126,7 +126,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                         "Request:[".print_r($this->httpRequest->request, true)."]\r\n"
                 );
             } else {
-                throw new InvalidResponseException("Signature Mismatch");
+                throw new \Omnipay\Common\Exception\InvalidResponseException("Signature Mismatch");
             }
         }
         
