@@ -38,26 +38,28 @@ class ServerCompleteAuthorizeRequest extends AbstractRequest
 
         $reference = json_decode($this->getTransactionReference(), true);
 
-        $this->checkSignature(array(
-            'VPSTxId',
-            'VendorTxCode',
-            'Status',
-            'TxAuthNo',
-            'this.getVendor',
-            'AVSCV2',
-            'tref.SecurityKey',
-            'AddressResult',
-            'PostCodeResult',
-            'CV2Result',
-            'GiftAid',
-            '3DSecureStatus',
-            'CAVV',
-            'AddressStatus',
-            'PayerStatus',
-            'CardType',
-            'Last4Digits',
-        ));
- 
+        $this->checkSignature(
+            array(
+                'VPSTxId',
+                'VendorTxCode',
+                'Status',
+                'TxAuthNo',
+                'this.getVendor',
+                'AVSCV2',
+                'tref.SecurityKey',
+                'AddressResult',
+                'PostCodeResult',
+                'CV2Result',
+                'GiftAid',
+                '3DSecureStatus',
+                'CAVV',
+                'AddressStatus',
+                'PayerStatus',
+                'CardType',
+                'Last4Digits',
+            )
+        );
+
         // we only get here if we passed the signature check
         return $this->httpRequest->request->all();
     }

@@ -102,9 +102,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
             if ($fieldSource === 'request') {
                 $fieldValue = $this->httpRequest->request->get($fieldName);
-            } else if ($fieldSource === 'tref') {
+            } elseif ($fieldSource === 'tref') {
                 $fieldValue = $transactionReference[$fieldName];
-            } else if ($fieldSource === 'this') {
+            } elseif ($fieldSource === 'this') {
                 $fieldValue = $this->{$fieldName}();
             }
             
@@ -119,17 +119,17 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         if (($ourSig !== $theirSig) && $throwExceptionOnFail) {
             if (self::$debugExceptions) {
                 throw new \Omnipay\Common\Exception\InvalidResponseExceptionInvalidResponseException(
-                        "Signature Mismatch\r\n".
-                        "#ours:[{$ourSig}]\r\n".
-                        "#theirs:[{$theirSig}]\r\n".
-                        "#ourSigData:[{$debugData[$fieldName]}]\r\n".
-                        "Request:[".print_r($this->httpRequest->request, true)."]\r\n"
+                "Signature Mismatch\r\n" .
+                "#ours:[{$ourSig}]\r\n" .
+                "#theirs:[{$theirSig}]\r\n" .
+                "#ourSigData:[{$debugData[$fieldName]}]\r\n" .
+                "Request:[" . print_r($this->httpRequest->request, true) . "]\r\n"
                 );
             } else {
                 throw new \Omnipay\Common\Exception\InvalidResponseException("Signature Mismatch");
             }
         }
-        
+
         return ($ourSig === $theirSig);
     }
 

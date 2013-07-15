@@ -29,8 +29,6 @@ class ServerCreateCardRequest extends ServerPurchaseRequest
         $profile = $this->getProfile();
         if (isset($profile)) {
             $data['Profile'] = $profile;
-//        } else {
-//            $data['Profile'] = 'NORMAL';
         }
 
         return $data;

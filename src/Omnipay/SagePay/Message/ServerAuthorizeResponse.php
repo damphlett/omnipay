@@ -75,5 +75,4 @@ class ServerAuthorizeResponse extends Response
     {
         return (isset($this->data['SecurityKey'])) ? $this->data['SecurityKey'] : null;
     }
-
 }
