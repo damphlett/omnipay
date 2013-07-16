@@ -18,4 +18,8 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class ServerCreateCardResponse extends ServerAuthorizeResponse
 {
+    public function getTransactionId()
+    {
+        return $this->getRequest()->getTransactionId();
+    }
 }

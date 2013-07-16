@@ -118,7 +118,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
         if (($ourSig !== $theirSig) && $throwExceptionOnFail) {
             if (self::$debugExceptions) {
-                throw new \Omnipay\Common\Exception\InvalidResponseExceptionInvalidResponseException(
+                throw new \Omnipay\Common\Exception\InvalidResponseException(
                     "Signature Mismatch\r\n" .
                     "#ours:[{$ourSig}]\r\n" .
                     "#theirs:[{$theirSig}]\r\n" .
