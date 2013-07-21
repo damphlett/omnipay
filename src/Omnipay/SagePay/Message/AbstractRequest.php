@@ -122,7 +122,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                     "Signature Mismatch\r\n" .
                     "#ours:[{$ourSig}]\r\n" .
                     "#theirs:[{$theirSig}]\r\n" .
-                    "#ourSigData:[{$debugData[$fieldName]}]\r\n" .
+                    "#ourSigData:[".print_r($debugData,true)."]\r\n" .
                     "Request:[" . print_r($this->httpRequest->request, true) . "]\r\n"
                 );
             } else {
