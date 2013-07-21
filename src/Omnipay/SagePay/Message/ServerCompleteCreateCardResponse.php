@@ -18,6 +18,11 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class ServerCompleteCreateCardResponse extends Response
 {
+    const STATUS_OK = 'OK';
+    const STATUS_MALFORMED = 'MALFORMED';
+    const STATUS_INVALID = 'INVALID';
+    const STATUS_ERROR = 'ERROR';
+    
     public function __construct(RequestInterface $request, $data)
     {
         $this->request = $request;
@@ -25,19 +30,12 @@ class ServerCompleteCreateCardResponse extends Response
     }
     
     /**
-     * OK = Process executed without error
-     * MALFORMED = ??? Input message was missing fields or badly formatted - should
-     *    only really occur during development!
-     * INVALID = ??? Transaction was not registered because although the POST format
-     *    was valid, some information supplied was invalid. eg. incorrect
-     *    vendor name or currency.
-     * ERROR = A problem occurred at Sage Pay which prevented transaction
-     *    registration
+     * The unique id allocated by your code to represent this transaction
      * @return string
      */
-    public function getStatus()
+    public function getTransactionId()
     {
-        return (isset($this->data['Status'])) ? $this->data['Status'] : null;
+        return $this->getRequest()->getTransactionId();
     }
 
     /**
@@ -48,6 +46,26 @@ class ServerCompleteCreateCardResponse extends Response
     public function getCardReference()
     {
         return (isset($this->data['Token'])) ? $this->data['Token'] : null;
+    }
+
+
+    /**
+     * ServerCompleteCreateCardResponse::STATUS_OK
+     *    Process executed without error
+     * ServerCompleteCreateCardResponse::STATUS_MALFORMED
+     *    ??? Input message was missing fields or badly formatted - should
+     *    only really occur during development!
+     * ServerCompleteCreateCardResponse::STATUS_INVALID
+     *    ??? Transaction was not registered because although the POST format
+     *    was valid, some information supplied was invalid. eg. incorrect
+     *    vendor name or currency.
+     * ServerCompleteCreateCardResponse::STATUS_ERROR
+     *    A problem occurred at Sage Pay which prevented transaction registration
+     * @return string
+     */
+    public function getStatus()
+    {
+        return (isset($this->data['Status'])) ? $this->data['Status'] : null;
     }
 
     /**
